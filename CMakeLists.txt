@@ -30,17 +30,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/sys_tools)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/ccom_core)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/packet)
 
-# ARCH related Include Dirs
-if ( ARCH MATCHES x86_64 OR ARCH MATCHES x86 )
-  # PC Serial
-  include_directories(serial_driver/pc_serial)
-elseif ( ARCH MATCHES Arm OR ARCH MATCHES arm )
-  # UW Serial
-  include_directories(serial_driver/uw_serial)
-else()
-  # PC Serial
-  include_directories(serial_driver/pc_serial)
-endif()
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/serial_driver)
 
 ##########################
 ## Main Target Sources  ##
@@ -55,17 +45,7 @@ FILE(GLOB SOURCE_FILES *.h *.c
         ${CMAKE_CURRENT_SOURCE_DIR}/packet/*.c
         )
 
-# ARCH related Sources
-if ( ARCH MATCHES x86_64 OR ARCH MATCHES x86 )
-  # PC Serial
-  aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/serial_driver/pc_serial  SOURCE_FILES)
-elseif ( ARCH MATCHES Arm OR ARCH MATCHES arm )
-  # UW Serial
-  aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/serial_driver/uw_serial  SOURCE_FILES)
-else()
-  # Serial
-  aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/serial_driver/pc_serial  SOURCE_FILES)
-endif()
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/serial_driver/  SOURCE_FILES)
 
 # Elog Source Files
 set(SOURCE_FILES "${SOURCE_FILES};${ELOG_SOURCES}")
