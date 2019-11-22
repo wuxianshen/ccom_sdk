@@ -26,6 +26,6 @@ enum ccom_recv_state
     ccom_frame_checksum = 7,
 };
 
-int8_t start_receive();
+int8_t start_receive(int8_t serial_idx);
 
 #endif //CCOM_SDK_CCOM_RECV_H

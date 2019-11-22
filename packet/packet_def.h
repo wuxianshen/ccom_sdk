@@ -36,6 +36,11 @@ enum deck_packet_event_e
     e_deck_packet_event_num,
 };
 
+static const uint8_t packet_event_nums[e_packet_type_num] = {
+    e_general_packet_event_num,
+    e_deck_packet_event_num,
+};
+
 typedef void(* PACKET_CALLBACK)(uint32_t, int8_t*);
 
 //Packet callback function pointers

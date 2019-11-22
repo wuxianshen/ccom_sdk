@@ -34,7 +34,7 @@ int main()
     int32_t ret = serial_init(e_deck_serial);
     log_i("[CCOM] Serial init ret %d", ret);
 
-    ret = start_receive();
+    ret = start_receive(e_deck_serial);
     log_i("[CCOM] Start receive ret %d", ret);
 
     recv_test();

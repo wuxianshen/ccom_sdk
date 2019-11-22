@@ -15,6 +15,8 @@
 #include "ccom_send.h"
 #include "elog.h"
 #include "uw_device.h"
+#include "ccom_protocol.h"
+#include "packet_def.h"
 
 //Deck packet type callbacks
 void deck_print_packet(uint32_t param_len, int8_t* param)
@@ -37,7 +39,16 @@ void deck_print_packet(uint32_t param_len, int8_t* param)
 
 void deck_echo_packet(uint32_t param_len, int8_t* param)
 {
-    int8_t ret = ccom_send_buffer(e_deck_serial, param_len, param);
+    uint8_t src_id = e_ccom_deck;
+    uint8_t dst_id = e_ccom_imx6;
+    uint8_t module_id = e_deck_packet;
+    uint8_t func_id = e_deck_print;
+    int32_t ret =  ccom_send_packet(e_deck_serial,
+                        src_id,
+                        dst_id,
+                        module_id,
+                        func_id,
+                        param_len, param);
     if ( ret != 0 )
     {
         log_e("[PACKET] Deck echo failed.");

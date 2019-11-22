@@ -12,6 +12,7 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <stdio.h>
+#include <malloc.h>
 #include "ccom_recv.h"
 #include "ccom_config.h"
 #include "serial_api.h"
@@ -35,10 +36,12 @@ int8_t frame_verify();
 
 void try_to_print_content();
 
-int8_t start_receive()
+int8_t start_receive(int8_t serial_idx)
 {
     g_receiving = 1;
-    int32_t ret = pthread_create(&recv_thread, NULL, receive_loop, NULL);
+    int8_t* idx_param = (int8_t*) malloc(sizeof(int8_t));
+    *idx_param = serial_idx;
+    int32_t ret = pthread_create(&recv_thread, NULL, receive_loop, (void*)idx_param);
     if ( ret != 0 )
     {
         log_e("Cannot create receiving process thread, err code %d...", ret);
@@ -49,7 +52,8 @@ int8_t start_receive()
 
 void* receive_loop(void* arg)
 {
-    log_i("Starting ccom receive processing ...");
+    int8_t serial_idx = *(int8_t*)arg;
+    log_i("Starting ccom receive processing for serial idx %d ...", serial_idx);
 
     int8_t read_char = 0;
     unsigned char recv_state = ccom_none;
@@ -57,7 +61,7 @@ void* receive_loop(void* arg)
     {
         usleep(5);
         int8_t char_read_state = -1;    //read fail: -1, read ok :0
-        read_char = serial_read_one_char(e_deck_serial, &char_read_state);
+        read_char = serial_read_one_char(serial_idx, &char_read_state);
 
         if ( char_read_state == -1 )
         {

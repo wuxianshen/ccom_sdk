@@ -71,7 +71,16 @@ void* packet_process_loop(void* arg)
 
             if ( cur_packet != NULL )
             {
-                g_packet_cb_map[cur_packet->packet_type][cur_packet->packet_event](cur_packet->param_len, cur_packet->param);
+                if (cur_packet->packet_type >= e_packet_type_num
+                || cur_packet->packet_event >= packet_event_nums[cur_packet->packet_type] )
+                {
+                    log_e("[CCOM] Error packet type %d, event %d", cur_packet->packet_type,
+                        cur_packet->packet_event);
+                }
+                else
+                {
+                    g_packet_cb_map[cur_packet->packet_type][cur_packet->packet_event](cur_packet->param_len, cur_packet->param);
+                }
 
                 if ( cur_packet->param_len > 0 )
                 {

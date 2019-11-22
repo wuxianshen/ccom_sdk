@@ -18,6 +18,8 @@
 #include "elog.h"
 #include "ccom_protocol.h"
 #include "packet_def.h"
+#include "ccom_recv.h"
+#include "packet_manage.h"
 
 int32_t elog_config();
 
@@ -28,8 +30,13 @@ int main()
     elog_config();
     log_i("Hello, World!\n");
 
+    start_packet_process();
+
     int32_t ret = serial_init(e_dvl_serial);
     log_i("[CCOM] Serial init ret %d", ret);
+
+    ret = start_receive(e_dvl_serial);
+    log_i("[CCOM] Start receive ret %d", ret);
 
     send_test();
 
@@ -112,7 +119,7 @@ void send_test()
         uint8_t src_id = e_ccom_deck;
         uint8_t dst_id = e_ccom_imx6;
         uint8_t module_id = e_deck_packet;
-        uint8_t func_id = e_deck_print;
+        uint8_t func_id = e_deck_echo;
 
         ret =  ccom_send_packet(e_dvl_serial,
                         src_id,
