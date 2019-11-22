@@ -20,10 +20,10 @@ pthread_t packet_process_thread;
 
 int8_t g_packet_processing_on = 0;
 
-void start_packet_process()
+int8_t start_packet_process()
 {
     packet_callback_register();
-    start_packet_process_thread();
+    return start_packet_process_thread();
 }
 
 int8_t packet_callback_register()

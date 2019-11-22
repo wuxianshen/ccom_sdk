@@ -13,7 +13,7 @@
 
 #include "packet_def.h"
 
-void start_packet_process();
+int8_t start_packet_process();
 
 int8_t packet_callback_register();
 

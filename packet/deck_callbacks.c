@@ -42,4 +42,21 @@ void deck_echo_packet(uint32_t param_len, int8_t* param)
     {
         log_e("[PACKET] Deck echo failed.");
     }
+    else
+    {
+        int8_t* print_buf = (int8_t*) malloc(param_len + 1);
+        memset(print_buf, 0, param_len + 1);
+
+        uint32_t print_cnt = 0;
+        for(uint32_t idx = 0; idx < param_len; idx++)
+        {
+            if ( isprint(param[idx]) )
+            {
+                print_buf[print_cnt] = param[idx];
+                print_cnt++;
+            }
+        }
+        log_w("[PACKET] Deck echo: %s", print_buf);
+        free(print_buf);
+    }
 }

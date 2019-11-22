@@ -56,9 +56,8 @@ void* receive_loop(void* arg)
     while( g_receiving != 0 )
     {
         usleep(5);
-        int8_t char_read_state = -1;
+        int8_t char_read_state = -1;    //read fail: -1, read ok :0
         read_char = serial_read_one_char(e_deck_serial, &char_read_state);
-        //log_i("%c", read_char);
 
         if ( char_read_state == -1 )
         {
