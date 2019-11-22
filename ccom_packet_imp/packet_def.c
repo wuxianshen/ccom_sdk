@@ -12,7 +12,3 @@
 
 //Packet callback function pointers
 PACKET_CALLBACK* g_packet_cb_map[e_packet_type_num] = {0};
-
-Vector g_packet_vector;
-
-pthread_mutex_t g_packet_vector_mt = PTHREAD_MUTEX_INITIALIZER;

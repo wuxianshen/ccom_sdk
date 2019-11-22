@@ -15,8 +15,6 @@
 
 int8_t start_packet_process();
 
-int8_t packet_callback_register();
-
 int8_t start_packet_process_thread();
 
 #endif //UW_ALL_IN_ONE_PACKET_MANAGE_H

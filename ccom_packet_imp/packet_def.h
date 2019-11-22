@@ -13,8 +13,6 @@
 #define UW_ALL_IN_ONE_PACKET_DEF_H
 
 #include <stdint.h>
-#include <pthread.h>
-#include "vector.h"
 
 enum packet_type_e
 {
@@ -36,11 +34,6 @@ enum deck_packet_event_e
     e_deck_packet_event_num,
 };
 
-static const uint8_t packet_event_nums[e_packet_type_num] = {
-    e_general_packet_event_num,
-    e_deck_packet_event_num,
-};
-
 typedef void(* PACKET_CALLBACK)(uint32_t, int8_t*);
 
 //Packet callback function pointers
@@ -48,24 +41,8 @@ extern PACKET_CALLBACK* g_packet_cb_map[e_packet_type_num];
 
 //Packet type length
 static const uint8_t g_packet_type_length[e_packet_type_num] = {
-    e_general_packet_event_num
+    e_general_packet_event_num,
+    e_deck_packet_event_num,
 };
-
-//Packet structs
-#pragma pack(1)
-
-typedef struct _packet_event_t
-{
-    uint8_t packet_type;
-    uint8_t packet_event;
-    uint32_t param_len;
-    int8_t* param;
-}packet_event_t;
-
-#pragma pack()
-
-extern Vector g_packet_vector;
-
-extern pthread_mutex_t g_packet_vector_mt;
 
 #endif //UW_ALL_IN_ONE_PACKET_DEF_H

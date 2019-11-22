@@ -3,17 +3,13 @@
            Copyright(C), 2016-2026, tao.jing All rights reserved
 
  **************************************************************************
-   File   : packet_api.h
+   File   : packet_structs.c
    Author : tao.jing
-   Date   : 2019/11/18
+   Date   : 2019/11/22
    Brief  : 
 **************************************************************************/
-#ifndef CCOM_SDK_PACKET_API_H
-#define CCOM_SDK_PACKET_API_H
-
 #include "packet_structs.h"
-#include "packet_def.h"
 
-void push_packet(packet_event_t* packet);
+Vector g_packet_vector;
 
-#endif //CCOM_SDK_PACKET_API_H
+pthread_mutex_t g_packet_vector_mt = PTHREAD_MUTEX_INITIALIZER;
