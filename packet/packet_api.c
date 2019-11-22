@@ -19,7 +19,7 @@ void push_packet(packet_event_t* packet)
     {
         log_e("[PACKET] Error push packet.");
     }
-    log_i("[PACKET] Packet vector addr %x.", &g_packet_vector);
-    log_i("[PACKET] Push packet ret %dm, vector size %d.", ret, g_packet_vector.size);
+    //log_i("[PACKET] Packet vector addr %x.", &g_packet_vector);
+    //log_i("[PACKET] Push packet ret %dm, vector size %d.", ret, g_packet_vector.size);
     pthread_mutex_unlock(&g_packet_vector_mt);
 }

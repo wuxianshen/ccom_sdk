@@ -29,6 +29,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/test)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/sys_tools)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/ccom_core)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/packet)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/ccom_packet_imp)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/serial_driver)
 
@@ -43,6 +44,8 @@ FILE(GLOB SOURCE_FILES *.h *.c
         ${CMAKE_CURRENT_SOURCE_DIR}/ccom_core/*.c
 
         ${CMAKE_CURRENT_SOURCE_DIR}/packet/*.c
+
+        ${CMAKE_CURRENT_SOURCE_DIR}/ccom_packet_imp/*.c
         )
 
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/serial_driver/  SOURCE_FILES)

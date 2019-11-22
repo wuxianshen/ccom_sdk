@@ -49,7 +49,7 @@ void ccom_packet_process(int8_t* content, uint16_t len)
     packet.param_len = data_len;
     packet.param = pakcet_data;
 
-    log_i("Packet type %d, event %d, len %d", module_id, func_id, data_len);
+    //log_i("Packet type %d, event %d, len %d", module_id, func_id, data_len);
 
     push_packet(&packet);
 }
