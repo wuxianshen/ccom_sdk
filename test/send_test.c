@@ -120,6 +120,8 @@ void send_test()
         uint8_t dst_id = e_ccom_imx6;
         uint8_t module_id = e_deck_packet;
         uint8_t func_id = e_deck_echo;
+        //uint8_t module_id = 2;
+        //uint8_t func_id = 0;
 
         ret =  ccom_send_packet(e_dvl_serial,
                         src_id,
