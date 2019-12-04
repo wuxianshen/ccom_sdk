@@ -16,7 +16,6 @@
 #include "ccom_recv.h"
 #include "ccom_config.h"
 #include "serial_api.h"
-#include "uw_device.h"
 #include "ccom_frame_verify.h"
 #include "ccom_protocol.h"
 #include "elog.h"

@@ -61,7 +61,10 @@ int8_t ccom_send_packet(int8_t serial_idx,
     package_buf[1] = dst_id;
     package_buf[2] = module_id;
     package_buf[3] = func_id;
-    memcpy(package_buf+4, data, data_len);
+    if (data != NULL)
+    {
+        memcpy(package_buf+4, data, data_len);
+    }
 
     ccom_send_buffer(serial_idx, send_len, package_buf);
 
