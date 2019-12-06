@@ -17,6 +17,8 @@
 
 int8_t packet_callback_register();
 
+void ccom_preprocess(int8_t* data, uint32_t data_len);
+
 //General packet type callbacks
 void general_print_packet(uint32_t param_len, int8_t* param);
 

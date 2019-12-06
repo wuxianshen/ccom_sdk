@@ -25,6 +25,8 @@ int32_t elog_config();
 
 void send_test();
 
+uint8_t send_serial_idx = e_deck_serial;
+
 int main()
 {
     elog_config();
@@ -32,10 +34,10 @@ int main()
 
     start_packet_process();
 
-    int32_t ret = serial_init(e_dvl_serial);
+    int32_t ret = serial_init(send_serial_idx);
     log_i("[CCOM] Serial init ret %d", ret);
 
-    ret = start_receive(e_dvl_serial);
+    ret = start_receive(send_serial_idx);
     log_i("[CCOM] Start receive ret %d", ret);
 
     send_test();
@@ -123,7 +125,7 @@ void send_test()
         //uint8_t module_id = 2;
         //uint8_t func_id = 0;
 
-        ret =  ccom_send_packet(e_dvl_serial,
+        ret =  ccom_send_packet(send_serial_idx,
                         src_id,
                         dst_id,
                         module_id,

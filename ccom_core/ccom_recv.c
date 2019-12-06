@@ -173,6 +173,11 @@ void* receive_loop(void* arg)
                 {
                     //log_i("[CCOM] Frame checksum ok.");
                     //try_to_print_content();
+                    {
+                        extern void ccom_preprocess(int8_t* data, uint32_t data_len);
+
+                        ccom_preprocess(&(g_ccom_recv_buf[CCOM_FRAME_CONTENT_CURSOR]), g_frame_length);
+                    }
                     ccom_packet_process(&(g_ccom_recv_buf[CCOM_FRAME_CONTENT_CURSOR]), g_frame_length);
                 }
                 else
