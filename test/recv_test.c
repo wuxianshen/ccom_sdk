@@ -31,10 +31,10 @@ int main()
 
     start_packet_process();
 
-    int32_t ret = serial_init(e_deck_serial);
+    int32_t ret = serial_init(e_default_serial);
     log_i("[CCOM] Serial init ret %d", ret);
 
-    ret = start_receive(e_deck_serial);
+    ret = start_receive(e_default_serial);
     log_i("[CCOM] Start receive ret %d", ret);
 
     recv_test();

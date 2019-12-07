@@ -15,6 +15,9 @@
 #include "ccom_frame_verify.h"
 #include "serial_api.h"
 #include "elog.h"
+#include "packet_def.h"
+#include "uw_device.h"
+#include "pc_serial_config.h"
 
 int8_t ccom_send_buffer(int8_t serial_idx, uint16_t send_len, int8_t* buf)
 {
@@ -55,6 +58,30 @@ int8_t ccom_send_packet(int8_t serial_idx,
                         uint8_t func_id,
                         uint16_t data_len, int8_t* data)
 {
+    if ( serial_idx == e_default_serial )
+    {
+        //Use default registered serial
+        src_id = g_packet_serial_map[module_id][func_id];
+        log_i("module %d func %d : src_id %d", module_id, func_id, src_id);
+        switch( src_id )
+        {
+            case e_imx6_radio:
+                serial_idx = e_deck_radio_serial;
+                dst_id = e_deck_radio;
+                break;
+            case e_imx6_iridium:
+                serial_idx = e_deck_iridium_serial;
+                dst_id = e_deck_iridium;
+                break;
+            case e_imx6_acoustic:
+                serial_idx = e_deck_acoustic_serial;
+                dst_id = e_deck_acoustic;
+                break;
+            default:
+                break;
+        }
+    }
+
     uint16_t send_len = data_len + CCOM_PACKET_HEADER_LEN;
     int8_t* package_buf = (int8_t*) malloc(send_len);
     package_buf[0] = src_id;
@@ -66,6 +93,8 @@ int8_t ccom_send_packet(int8_t serial_idx,
         memcpy(package_buf+4, data, data_len);
     }
 
+    log_i("[CCOM] Send packet serial idx %d", serial_idx);
+    log_i("[CCOM] Send packet serial name %s", pc_serial_names[serial_idx]);
     ccom_send_buffer(serial_idx, send_len, package_buf);
 
     free(package_buf);

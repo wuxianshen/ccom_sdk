@@ -14,6 +14,7 @@
 #include "elog.h"
 #include "packet_structs.h"
 #include "packet_def.h"
+#include "uw_device.h"
 
 int8_t packet_callback_register()
 {
@@ -27,6 +28,21 @@ int8_t packet_callback_register()
     g_packet_cb_map[e_deck_packet][e_deck_print] = deck_print_packet;
     g_packet_cb_map[e_deck_packet][e_deck_echo] = deck_echo_packet;
 
+    return 0;
+}
+
+int8_t packet_serial_map_init()
+{
+    for (uint8_t idx_t = 0; idx_t < e_packet_type_num; idx_t ++)
+    {
+        g_packet_serial_map[idx_t] = (uint8_t*) malloc(g_packet_type_length[idx_t] * sizeof(PACKET_CALLBACK));
+
+        for (int inidx = 0; inidx < g_packet_type_length[idx_t]; ++inidx)
+        {
+            //Default serial of radio station
+            g_packet_serial_map[idx_t][inidx] = e_imx6_radio;
+        }
+    }
     return 0;
 }
 

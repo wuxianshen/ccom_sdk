@@ -17,11 +17,17 @@
 static const char* pc_serial_names[e_serial_num] = {
                                                     "/dev/ttyUSB0",
                                                     "/dev/ttyUSB0",
+                                                    "/dev/ttyUSB1",
+                                                    "/dev/ttyUSB3",
                                                     "/dev/ttyUSB0",
                                                     "/dev/ttyUSB1",
+                                                    "/dev/ttyUSB2",
                                                 };
 
 static const int pc_serial_baud[e_serial_num] = {
+                                                    19200,
+                                                    19200,
+                                                    19200,
                                                     19200,
                                                     19200,
                                                     19200,

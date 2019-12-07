@@ -25,7 +25,7 @@ int32_t elog_config();
 
 void send_test();
 
-uint8_t send_serial_idx = e_deck_serial;
+uint8_t send_serial_idx = e_deck_radio;
 
 int main()
 {

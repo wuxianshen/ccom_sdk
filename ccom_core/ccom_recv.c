@@ -27,7 +27,7 @@ int8_t g_ccom_recv_buf[CCOM_RECV_BUF_LEN] = { 0 };
 uint32_t g_ccom_buf_cursor = 0;
 uint16_t g_frame_length = 0;    //only for data length, not including frame header and checksum
 
-void* receive_loop(void* arg);
+void* ccom_receive_loop(void* arg);
 
 int8_t frame_header_verify();
 
@@ -40,7 +40,7 @@ int8_t start_receive(int8_t serial_idx)
     g_receiving = 1;
     int8_t* idx_param = (int8_t*) malloc(sizeof(int8_t));
     *idx_param = serial_idx;
-    int32_t ret = pthread_create(&recv_thread, NULL, receive_loop, (void*)idx_param);
+    int32_t ret = pthread_create(&recv_thread, NULL, ccom_receive_loop, (void *) idx_param);
     if ( ret != 0 )
     {
         log_e("Cannot create receiving process thread, err code %d...", ret);
@@ -49,7 +49,7 @@ int8_t start_receive(int8_t serial_idx)
     return 0;
 }
 
-void* receive_loop(void* arg)
+void* ccom_receive_loop(void* arg)
 {
     int8_t serial_idx = *(int8_t*)arg;
     log_i("Starting ccom receive processing for serial idx %d ...", serial_idx);
@@ -67,6 +67,7 @@ void* receive_loop(void* arg)
             continue;
         }
 
+        //log_i("%X", read_char);
         if ( recv_state == ccom_none )
         {
             //wait for frame header1 0x55

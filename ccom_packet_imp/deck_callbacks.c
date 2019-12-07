@@ -17,6 +17,8 @@
 #include "uw_device.h"
 #include "ccom_protocol.h"
 #include "packet_def.h"
+#include "pc_serial_config.h"
+#include "uw_device.h"
 
 //Deck packet type callbacks
 void deck_print_packet(uint32_t param_len, int8_t* param)
@@ -43,7 +45,7 @@ void deck_echo_packet(uint32_t param_len, int8_t* param)
     uint8_t dst_id = e_ccom_imx6;
     uint8_t module_id = e_deck_packet;
     uint8_t func_id = e_deck_print;
-    int32_t ret =  ccom_send_packet(e_deck_serial,
+    int32_t ret =  ccom_send_packet(e_default_serial,
                         src_id,
                         dst_id,
                         module_id,

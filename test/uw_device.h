@@ -16,8 +16,12 @@
 //5(4) - Used by 618 for GPS
 #define UW_DEVICE_GPS_PORT 1
 #define UW_DEVICE_DVL_PORT 2
-#define UW_DEVICE_DAM_PORT 8
-#define UW_DEVICE_DECK_PORT 7
+#define UW_DEVICE_DAM_PORT 8  //Real 7
+#define UW_DEVICE_DECK_PORT 7 //Real 6
+#define UW_DEVICE_BATTERY_PORT 9 //to be define
+#define UW_DEVICE_RADIO_PORT    10
+#define UW_DEVICE_IRIDIUM_PORT  11
+#define UW_DEVICE_ACOUSTIC_PORT 12
 
 #define SERIAL_POWER_ON  1
 #define SERIAL_POWER_OFF 2
@@ -46,12 +50,44 @@
 #define UW_IRIDIUM_COMM_POWER_PORT  11
 #define UW_ACOUSTIC_COMM_POWER_PORT 12
 
-enum serial_list
+enum serial_list_e
 {
-    e_gps_serial  = 0,
-    e_dvl_serial  = 1,
-    e_dam_serial  = 2,
-    e_deck_serial = 3,
+    e_gps_serial     = 0,
+    e_dvl_serial     = 1,
+    e_dam_serial     = 2,
+    e_battery_serial = 3,
+    e_deck_radio_serial    = 4,
+    e_deck_iridium_serial  = 5,
+    e_deck_acoustic_serial = 6,
     e_serial_num,
 };
+
+//
+enum uw_ccom_device_e
+{
+    e_default_serial = -1,
+	e_deck_radio    = 0,
+	e_deck_iridium  = 1,
+	e_deck_acoustic = 2,
+	e_imx6_radio    = 3,
+	e_imx6_iridium  = 4,
+	e_imx6_acoustic = 5,
+};
+
+enum can_motor_group_e
+{
+    e_all_motor_group = 0,
+    e_joint1_group    = 1,
+    e_joint2_group    = 2,
+};
+
+enum auv_model_e
+{
+    e_auv_model_init = 0,
+    e_auv_model_deck = 1,
+    e_auv_model_surf = 2,
+    e_auv_model_sail = 3,
+    e_auv_model_dive = 4,
+};
+
 #endif //SUB_PERCEPTION_UW_DEVICE_H

@@ -39,6 +39,8 @@ typedef void(* PACKET_CALLBACK)(uint32_t, int8_t*);
 //Packet callback function pointers
 extern PACKET_CALLBACK* g_packet_cb_map[e_packet_type_num];
 
+extern uint8_t* g_packet_serial_map[e_packet_type_num];
+
 //Packet type length
 static const uint8_t g_packet_type_length[e_packet_type_num] = {
     e_general_packet_event_num,

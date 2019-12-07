@@ -12,3 +12,5 @@
 
 //Packet callback function pointers
 PACKET_CALLBACK* g_packet_cb_map[e_packet_type_num] = {0};
+
+uint8_t* g_packet_serial_map[e_packet_type_num] = {0};
