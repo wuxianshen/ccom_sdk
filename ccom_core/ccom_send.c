@@ -17,7 +17,7 @@
 #include "elog.h"
 #include "packet_def.h"
 #include "uw_device.h"
-#include "pc_serial_config.h"
+//#include "pc_serial_config.h"
 
 int8_t ccom_send_buffer(int8_t serial_idx, uint16_t send_len, int8_t* buf)
 {
@@ -94,7 +94,7 @@ int8_t ccom_send_packet(int8_t serial_idx,
     }
 
     log_i("[CCOM] Send packet serial idx %d", serial_idx);
-    log_i("[CCOM] Send packet serial name %s", pc_serial_names[serial_idx]);
+    //log_i("[CCOM] Send packet serial name %s", pc_serial_names[serial_idx]);
     ccom_send_buffer(serial_idx, send_len, package_buf);
 
     free(package_buf);

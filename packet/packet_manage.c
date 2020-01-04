@@ -62,8 +62,8 @@ void* packet_process_loop(void* arg)
                 if (cur_packet->packet_type >= e_packet_type_num
                 || cur_packet->packet_event >= g_packet_type_length[cur_packet->packet_type] )
                 {
-                    log_e("[CCOM] Error packet type %d, event %d", cur_packet->packet_type,
-                        cur_packet->packet_event);
+                    log_e("[CCOM] Error packet type %d, event %d (%d %d)", cur_packet->packet_type,
+                        cur_packet->packet_event, e_packet_type_num, g_packet_type_length[cur_packet->packet_type]);
                 }
                 else
                 {
