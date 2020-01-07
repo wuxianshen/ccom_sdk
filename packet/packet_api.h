@@ -13,6 +13,7 @@
 
 #include "packet_structs.h"
 #include "packet_def.h"
+#include "malloc.h"
 
 void push_packet(packet_event_t* packet);
 
