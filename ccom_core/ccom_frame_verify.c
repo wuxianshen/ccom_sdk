@@ -39,7 +39,7 @@ uint16_t get_checksum_u16(int8_t* buf, uint32_t len)
     }
     return check_sum;
     */
-    uint8_t crc16 = 0;
+    uint16_t crc16 = 0;
     for (uint32_t idx = 0; idx < len; idx ++)
     {
         crc16 = update_crc_16(crc16, (unsigned char) *(buf+idx));
