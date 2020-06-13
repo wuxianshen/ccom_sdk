@@ -16,9 +16,9 @@
 #include "serial_api.h"
 #include "sys_tool.h"
 #include "elog.h"
-#include "uw_device.h"
 #include "uw_defines/auv_deck_protocol.h"
 #include "uw_defines/uw_telemetry_defines.h"
+#include "uw_defines/uw_device_defines.h"
 
 int serial_idx = e_virtual_serial1;
 
@@ -70,7 +70,8 @@ int main()
         /**************************************/
         //********     Telemetry     **********/
         /**************************************/
-        if ( strcmp(str, "telemetry") == 0 )
+        if ( strcmp(str, "telemetry") == 0 ||
+            strcmp(str, "t") == 0)
         {
             log_i("[Deck Command] Exit main, you need send exit command 3 times to close uw_all_in_one!", str);
             module_id = e_telemetry_packet;

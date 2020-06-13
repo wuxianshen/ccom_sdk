@@ -22,8 +22,8 @@ static const char* pc_serial_names[e_serial_num] = {
                                                     "/dev/ttyUSB0",
                                                     "/dev/ttyUSB1",
                                                     "/dev/ttyUSB2",
-                                                    "/dev/pts/19",
-                                                    "/dev/pts/20"
+                                                    "/dev/pts/20",
+                                                    "/dev/pts/21"
                                                 };
 
 static const int pc_serial_baud[e_serial_num] = {
