@@ -13,7 +13,9 @@
 #define UW_ALL_IN_ONE_PACKET_DEF_H
 
 #include <stdint.h>
+#include "uw_defines/auv_deck_protocol.h"
 
+/*
 enum packet_type_e
 {
     e_general_packet = 0,
@@ -33,6 +35,7 @@ enum deck_packet_event_e
     e_deck_echo  = 1,
     e_deck_packet_event_num,
 };
+*/
 
 typedef void(* PACKET_CALLBACK)(uint32_t, int8_t*);
 

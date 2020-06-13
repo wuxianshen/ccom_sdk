@@ -59,6 +59,8 @@ enum serial_list_e
     e_deck_radio_serial    = 4,
     e_deck_iridium_serial  = 5,
     e_deck_acoustic_serial = 6,
+    e_virtual_serial1 = 7,
+    e_virtual_serial2 = 8,
     e_serial_num,
 };
 

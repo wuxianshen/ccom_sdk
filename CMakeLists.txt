@@ -31,6 +31,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/ccom_packet_imp)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/serial_driver)
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/uw_defines)
+
 ##########################
 ## Main Target Sources  ##
 ##########################
@@ -49,5 +51,8 @@ set(SOURCE_FILES "${SOURCE_FILES};${CCOM_SDK_SOURCES}")
 set(SEND_TEST_SOURCE_FILES "${SOURCE_FILES};${CMAKE_CURRENT_SOURCE_DIR}/test/send_test.c")
 set(RECV_TEST_SOURCE_FILES "${SOURCE_FILES};${CMAKE_CURRENT_SOURCE_DIR}/test/recv_test.c")
 
+set(AUV_DECK_DATA_GENERATOR "${SOURCE_FILES};${CMAKE_CURRENT_SOURCE_DIR}/test/auv_deck_data_generator.c")
+
 add_executable(send_test ${SEND_TEST_SOURCE_FILES})
 add_executable(recv_test ${RECV_TEST_SOURCE_FILES})
+add_executable(auv_deck_data_generator ${AUV_DECK_DATA_GENERATOR})

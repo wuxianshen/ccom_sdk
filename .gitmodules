@@ -1,0 +1,3 @@
+[submodule "uw_defines"]
+	path = uw_defines
+	url = git@github.com:wuxianshen/uw_defines.git
