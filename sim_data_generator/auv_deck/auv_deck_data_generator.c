@@ -17,8 +17,9 @@
 #include "sys_tool.h"
 #include "elog.h"
 #include "uw_defines/auv_deck_protocol.h"
-#include "uw_defines/uw_telemetry_defines.h"
 #include "uw_defines/uw_device_defines.h"
+#include "uw_defines/uw_telemetry_defines.h"
+#include "sim_telemetry.h"
 
 int serial_idx = e_virtual_serial1;
 
@@ -73,47 +74,13 @@ int main()
         if ( strcmp(str, "telemetry") == 0 ||
             strcmp(str, "t") == 0)
         {
-            log_i("[Deck Command] Exit main, you need send exit command 3 times to close uw_all_in_one!", str);
             module_id = e_telemetry_packet;
-            func_id = e_telemetry_data;
+            func_id   = e_telemetry_data;
 
             cmd_data_len = sizeof(uw_telemetry_frame_t);
             cmd_data = (char*) malloc(cmd_data_len);
-            uw_telemetry_frame_t* p_data = (uw_telemetry_frame_t*)cmd_data;
 
-            // Relay state
-            uint16_t relay_data = 0xAAAA; //0xAAAA 0x5555
-            memcpy(&(p_data->relay_state), &relay_data, sizeof(uint16_t));
-            //log_i("Relay %d state %d", 0, p_data->relay_state.relay00);
-
-            // Battery state
-            p_data->battery_state.voltage = 240;
-            p_data->battery_state.current = 20;
-            p_data->battery_state.state_of_charge = 70;
-
-            // INS state
-            p_data->ins_state.ins_state = 0;
-            p_data->ins_state.ins_error_info = 100;
-            p_data->ins_state.imu_state = 11;
-            p_data->ins_state.imu_error_info = 100;
-            p_data->ins_state.navigation_state = 100;
-            p_data->ins_state.dvl_state = 1;
-            p_data->ins_state.gps_state = 1;
-
-            // GPS state
-            p_data->gps_state.longitude = 117098685;
-            p_data->gps_state.latitude  = 39063481;
-            p_data->gps_state.height = 0;
-
-            // Pose state
-            p_data->pose_state.roll  = 100;
-            p_data->pose_state.pitch = -50;
-            p_data->pose_state.yaw   = 20;
-
-            // Vel state
-            p_data->vel_state.east_vel  = 50;
-            p_data->vel_state.north_vel = 60;
-            p_data->vel_state.up_vel    = -10;
+            generator_telemetry_frame(cmd_data, cmd_data_len);
         }
 
         if (module_id == 0xFF)

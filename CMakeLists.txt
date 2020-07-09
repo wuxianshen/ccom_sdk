@@ -33,6 +33,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/serial_driver)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/uw_defines)
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/sim_data_generator)
+
 ##########################
 ## Main Target Sources  ##
 ##########################
@@ -51,8 +53,17 @@ set(SOURCE_FILES "${SOURCE_FILES};${CCOM_SDK_SOURCES}")
 set(SEND_TEST_SOURCE_FILES "${SOURCE_FILES};${CMAKE_CURRENT_SOURCE_DIR}/test/send_test.c")
 set(RECV_TEST_SOURCE_FILES "${SOURCE_FILES};${CMAKE_CURRENT_SOURCE_DIR}/test/recv_test.c")
 
-set(AUV_DECK_DATA_GENERATOR "${SOURCE_FILES};${CMAKE_CURRENT_SOURCE_DIR}/test/auv_deck_data_generator.c")
+set(SOURCE_SIM_DATA_GENERATOR "${SOURCE_FILES}")
+
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/sim_data_generator/  SOURCE_SIM_DATA_GENERATOR)
+
+set(SOURCE_AUV_2_DECK "${SOURCE_SIM_DATA_GENERATOR}")
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/sim_data_generator/auv_deck/  SOURCE_AUV_2_DECK)
+
+set(SOURCE_DECK_2_AUV "${SOURCE_SIM_DATA_GENERATOR}")
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/sim_data_generator/deck_auv/  SOURCE_DECK_2_AUV)
 
 add_executable(send_test ${SEND_TEST_SOURCE_FILES})
 add_executable(recv_test ${RECV_TEST_SOURCE_FILES})
-add_executable(auv_deck_data_generator ${AUV_DECK_DATA_GENERATOR})
+add_executable(auv_deck_generator ${SOURCE_AUV_2_DECK})
+add_executable(deck_auv_generator ${SOURCE_DECK_2_AUV})
