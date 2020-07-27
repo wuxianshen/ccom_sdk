@@ -11,6 +11,7 @@
 #include <malloc.h>
 #include <unistd.h>
 #include <pthread.h>
+#include <string.h>
 #include "packet_manage.h"
 #include "packet_callbacks.h"
 #include "packet_structs.h"
@@ -53,27 +54,25 @@ void* packet_process_loop(void* arg)
         pthread_mutex_lock(&g_packet_vector_mt);
         if ( !vector_is_empty(&g_packet_vector) )
         {
-            packet_event_t* cur_packet = vector_front(&g_packet_vector);
+            packet_event_t cur_packet;
+            memcpy(&cur_packet, vector_front(&g_packet_vector), sizeof(packet_event_t));
             vector_pop_front(&g_packet_vector);
             pthread_mutex_unlock(&g_packet_vector_mt);
 
-            if ( cur_packet != NULL )
+            if (cur_packet.packet_type >= e_packet_type_num
+                || cur_packet.packet_event >= g_packet_type_length[cur_packet.packet_type] )
             {
-                if (cur_packet->packet_type >= e_packet_type_num
-                || cur_packet->packet_event >= g_packet_type_length[cur_packet->packet_type] )
-                {
-                    log_e("[CCOM] Error packet type %d, event %d (%d %d)", cur_packet->packet_type,
-                        cur_packet->packet_event, e_packet_type_num, g_packet_type_length[cur_packet->packet_type]);
-                }
-                else
-                {
-                    g_packet_cb_map[cur_packet->packet_type][cur_packet->packet_event](cur_packet->param_len, cur_packet->param);
-                }
+                log_e("[CCOM] Error packet type %d, event %d (%d %d)", cur_packet.packet_type,
+                      cur_packet.packet_event, e_packet_type_num, g_packet_type_length[cur_packet.packet_type]);
+            }
+            else
+            {
+                g_packet_cb_map[cur_packet.packet_type][cur_packet.packet_event](cur_packet.param_len, cur_packet.param);
+            }
 
-                if ( cur_packet->param_len > 0 )
-                {
-                    free(cur_packet->param);
-                }
+            if ( cur_packet.param_len > 0 && cur_packet.param != NULL )
+            {
+                free(cur_packet.param);
             }
             continue;
         }
