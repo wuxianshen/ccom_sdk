@@ -34,11 +34,14 @@ int main()
 
     start_packet_process();
 
-    int32_t ret = serial_init(send_serial_idx);
-    log_i("[CCOM] Serial init ret %d", ret);
+    ccom_serial_tran *RADIO_serial = (ccom_serial_tran*)malloc(sizeof(ccom_serial_tran));
+    start_serial_recv(RADIO_serial,e_deck_radio_serial);
 
-    ret = start_receive(send_serial_idx);
-    log_i("[CCOM] Start receive ret %d", ret);
+    ccom_serial_tran *IRIDIUM_serial = (ccom_serial_tran*)malloc(sizeof(ccom_serial_tran));
+    start_serial_recv(IRIDIUM_serial,e_deck_iridium_serial);
+
+    ccom_serial_tran *ACOUSTIC_serial = (ccom_serial_tran*)malloc(sizeof(ccom_serial_tran));
+    start_serial_recv(ACOUSTIC_serial,e_deck_acoustic_serial);
 
     send_test();
 

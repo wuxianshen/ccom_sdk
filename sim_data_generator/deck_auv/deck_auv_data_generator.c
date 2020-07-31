@@ -21,7 +21,7 @@
 #include "uw_defines/uw_telemetry_defines.h"
 #include "sim_telemetry.h"
 
-int serial_idx = e_virtual_serial1;
+int serial_idx;
 
 int32_t elog_config();
 
@@ -33,8 +33,14 @@ int main()
     int32_t ret = 0;
     //ret = start_packet_process();
 
-    ret = serial_init(serial_idx);
-    log_i("[CCOM] Serial init ret %d", ret);
+    ret = serial_init(e_deck_radio_serial);
+    log_i("[CCOM] Serial deck_radio_serial init ret %d", ret);
+
+    ret = serial_init(e_deck_iridium_serial);
+    log_i("[CCOM] Serial deck_iridium_serial init ret %d", ret);
+
+    ret = serial_init(e_deck_acoustic_serial);
+    log_i("[CCOM] Serial deck_acoustic_serial init ret %d", ret);
 
     //ret = start_receive(serial_idx);
     //log_i("[CCOM] Serial init ret %d", ret);
@@ -42,7 +48,9 @@ int main()
     char cmd;
     char* cmd_data;
     uint16_t cmd_data_len = 0;
-    char str[30] = {0};
+    char str_input[30] = {0};
+    char str_serial[3] = {0};
+    char str_command[28] = {0};
     printf("Press any key to test send, q to quit.\n");
     ret = scanf(" %c", &cmd);
 
@@ -56,12 +64,47 @@ int main()
     {
         cmd_data = NULL;
         module_id = 0xFF;
-        memset(str, 0, sizeof(str));
+        memset(str_input, 0, sizeof(str_input));
+        memset(str_serial, 0, sizeof(str_serial));
+        memset(str_command, 0, sizeof(str_command));
         printf("Input a command: ");
-        ret = scanf(" %s", str);
+        ret = scanf(" %s", str_input);
 
-        log_i("[Command] %s", str);
-
+        log_i("[Command] %s", str_input);
+        /*
+         * choose the serial ID (from command)
+         */
+        str_serial[0] = str_input[0];
+        str_serial[1] = str_input[1];
+        str_serial[2] = '\0';
+        // use radio
+        if ( strcmp(str_serial, "r:") == 0 || strcmp(str_serial, "r_") == 0)
+        {
+            serial_idx = e_deck_radio_serial;
+            src_id = e_deck_radio;
+            dst_id = e_imx6_radio;
+        }
+        // use iridium
+        if ( strcmp(str_serial, "i:") == 0 || strcmp(str_serial, "i_") == 0)
+        {
+            serial_idx = e_deck_iridium_serial;
+            src_id = e_deck_iridium;
+            dst_id = e_imx6_iridium;
+        }
+        // use acoustic
+        if ( strcmp(str_serial, "a:") == 0 || strcmp(str_serial, "a_") == 0)
+        {
+            serial_idx = e_deck_acoustic_serial;
+            src_id = e_deck_acoustic;
+            dst_id = e_imx6_acoustic;
+        }
+        /*
+         * choose the command module_ID & func_ID (from command)
+         */
+        for(int str_i=0; str_i < 28; str_i++)
+        {
+            str_command[str_i] = str_input[str_i+2];
+        }
         /**************************************/
         //********      General      **********/
         /**************************************/
@@ -71,12 +114,11 @@ int main()
         /**************************************/
         //********     Telemetry     **********/
         /**************************************/
-        if ( strcmp(str, "telemetry") == 0 ||
-             strcmp(str, "t") == 0)
+        if ( strcmp(str_command, "telemetry") == 0 ||
+             strcmp(str_command, "t") == 0)
         {
             module_id = e_telemetry_packet;
             func_id   = e_telemetry_data;
-
             cmd_data_len = sizeof(uw_telemetry_frame_t);
             cmd_data = (char*) malloc(cmd_data_len);
 
@@ -85,7 +127,7 @@ int main()
 
         if (module_id == 0xFF)
         {
-            log_i("[CCOM] Wrong command string %s", str);
+            log_i("[CCOM] Wrong command string %s", str_input);
 
             if (cmd_data != NULL)
             {
